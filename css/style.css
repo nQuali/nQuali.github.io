@@ -39,6 +39,7 @@ body {
   padding: 8px;
   -webkit-box-shadow: inset 1px 1px 5px -2px #b3b3af;
           box-shadow: inset 1px 1px 5px -2px #b3b3af;
+  color: #777777FF;
 }
 .form p {
   font-weight: bold;
