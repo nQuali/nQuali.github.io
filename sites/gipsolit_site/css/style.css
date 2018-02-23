@@ -37,7 +37,7 @@ section {
 /* main */
 .main {
   padding: 3rem 0 5rem;
-  background: #ffffff url(../img/main-bg.png) center center no-repeat;
+  background: #ffffff url('../img/main-bg.png') center center no-repeat;
   background-size: cover;
   /* Подзаголовок */
   /* Зеленый ярлык */
