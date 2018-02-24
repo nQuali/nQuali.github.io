@@ -74,6 +74,7 @@ section {
   font-size: 2.4rem;
 }
 .main span {
+  border-radius: 5px;
   display: inline-block;
   padding: 3rem 5rem;
   font-size: 1.8rem;
@@ -90,14 +91,15 @@ section {
   display: block;
   margin-top: 3rem;
   font-size: 2.2rem;
-  font-family: 'ProximaNova_bold', sans-serif;
   text-transform: uppercase;
+  font-family: 'ProximaNova_bold', sans-serif;
 }
 .main-form {
   display: block;
   padding: 4rem 5rem;
   background-color: #ffffff;
   text-align: center;
+  border-radius: 5px;
   /* Заголовок формы */
   /* Кнопка в форме */
   /* Подписи к полям */
@@ -196,7 +198,18 @@ section {
   }
 }
 @media (max-width: 539px) {
+  .main-form {
+    padding: 2rem 4rem;
+  }
+  .main-form-header {
+    font-size: 1.4rem;
+  }
   .main-title h1 {
     font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  .main-subtitle {
+    margin-bottom: 2rem;
+    font-size: 2rem;
   }
 }
