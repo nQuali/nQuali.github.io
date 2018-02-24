@@ -23,6 +23,7 @@ body {
 }
 a:hover {
   text-decoration: none;
+  color: #00be00;
 }
 button:focus,
 input:focus,
@@ -196,7 +197,6 @@ section {
 }
 .features-block p a:hover {
   text-decoration: underline;
-  cursor: pointer;
 }
 .features-img {
   height: 8rem;
