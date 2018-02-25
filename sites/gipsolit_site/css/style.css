@@ -34,27 +34,46 @@ textarea:focus {
 .button {
   padding: 1rem 3rem;
   border-radius: 8px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffba15;
   font-size: 1.2rem;
-  background-color: #ffb400;
   color: #ffffff;
   text-transform: uppercase;
-  border: none;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+  background: -webkit-gradient(linear, left bottom, left top, from(#f5ad00), to(#ffb504));
+  background: linear-gradient(0deg, #f5ad00 0%, #ffb504 100%);
+  -webkit-box-shadow: 4px 7px 13px 0px rgba(0, 0, 0, 0.04);
+          box-shadow: 4px 7px 13px 0px rgba(0, 0, 0, 0.04);
 }
 .button:hover {
   cursor: pointer;
-  background-color: #e6a200;
+  background: -webkit-gradient(linear, left bottom, left top, from(#d89800), to(#ffc843));
+  background: linear-gradient(0deg, #d89800 0%, #ffc843 100%);
 }
 /* Typography */
 section {
   padding: 10rem 0;
 }
 .section-header {
-  margin: 0 0 10rem;
   font-family: 'ProximaNova_bold', sans-serif;
-  font-size: 3.6rem;
+  margin: 0 0 10rem;
   text-align: center;
+}
+.section-header_light {
+  color: #ffffff;
+  margin-top: 0;
+}
+.section-header_light p {
+  margin-top: 3rem;
+}
+.section-header h2 {
+  font-size: 3.6rem;
+}
+.section-header p {
+  font-size: 1.7rem;
+  font-family: 'ProximaNova_reg', sans-serif;
 }
 /* main */
 .main {
@@ -232,6 +251,60 @@ section {
   background: url('../img/right-arrow.svg') center no-repeat;
   background-size: 70%;
 }
+/* Секция с ценами */
+.price {
+  background: #00be00 url('../img/prices/prices-bg.png') center center repeat;
+  /* Карточки с тарифами */
+}
+.price-header-btn {
+  height: 5rem;
+}
+.price-button {
+  text-align: right;
+}
+.price-block {
+  border-radius: 5px;
+  padding: 1rem 3rem;
+  min-height: 60rem;
+  background-color: #ffffff;
+  -webkit-box-shadow: 7px 12px 21px 0px rgba(0, 0, 0, 0.17);
+          box-shadow: 7px 12px 21px 0px rgba(0, 0, 0, 0.17);
+  text-align: center;
+}
+.price-block h4 {
+  margin: 3rem 0;
+  font-size: 1.9rem;
+  font-family: 'ProximaNova_bold', sans-serif;
+}
+.price img {
+  width: 100%;
+  max-width: 30rem;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+.price-tag {
+  display: block;
+  margin-bottom: 2rem;
+  font-size: 1.9rem;
+  font-family: 'ProximaNova_bold', sans-serif;
+}
+.price-list {
+  padding: 0;
+  list-style: none;
+  min-height: 17rem;
+  font-size: 1.8rem;
+  line-height: 1.6;
+}
+.price-list li::before {
+  content: '';
+  display: inline-block;
+  margin-right: 1rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: url('../img/prices/check.svg') no-repeat center;
+  background-size: 100%;
+  vertical-align: middle;
+}
 /* Модальные окна */
 .popup {
   display: none;
@@ -280,6 +353,21 @@ section {
   font-family: 'ProximaNova_bold', sans-serif;
 }
 /* Медиа запросы */
+@media (max-width: 1199px) {
+  .price-block {
+    margin-bottom: 2rem;
+  }
+  .price-header-btn {
+    margin: 1rem 0 2rem;
+  }
+  .price-button {
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .section-header_light {
+    margin-bottom: 0;
+  }
+}
 @media (max-width: 991px) {
   .main {
     background-position: top right;
