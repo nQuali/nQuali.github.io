@@ -68,3 +68,7 @@ body {
   -webkit-box-shadow: 2px 2px 6px -2px #b3b3af;
           box-shadow: 2px 2px 6px -2px #b3b3af;
 }
+
+.form button:active {
+  outline: none;
+}
