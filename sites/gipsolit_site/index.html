@@ -37,7 +37,7 @@
 					<div class="col-md-4 col-lg-3 col-sm-12">
 						<div class="wrap">
 							<div class="wrap-block">
-								<button class="button header-btn">Получить консультацию</button>
+								<button class="button header-btn popup-btn">Получить консультацию</button>
 							</div>
 						</div>
 					</div>
@@ -134,6 +134,32 @@
 						</div>
 					</section>
 
+					<!-- Модальные окна -->
+					<!-- Получить консультацию -->
+					<div class="popup">
+						<!-- Само (белое) модальное окно -->
+						<div class="popup-dialog">
+							<!-- Содержимое модального окна -->
+							<div class="popup-content">
+								<button class="popup-close">&times</button>
+								<h4 class="popup-header">
+									Заинтересовало?
+								</h4>
+								<p>Оставьте контактные данные <br>для связи</p>
+								<div class="main-form popup-form">
+									<form action="#">
+										<label for="#">Ваше имя</label>
+										<input class="main-form-input" type="text">
+										<label for="#">Номер телефона</label>
+										<input class="main-form-input" type="text">
+										<label for="#">Сообщение</label>
+										<textarea class="main-form-input" rows="5"></textarea>
+										<button class="main-form-btn button" type="submit">Оставьте заявку</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
 
 					<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
@@ -141,35 +167,7 @@
 					<link rel="stylesheet" href="slick/slick-theme.css">
 					<script src="slick/slick.min.js"></script>
 
-					<script>
-						$(document).ready(function(){
-							$('.features-slider').slick({
-								infinite: true,
-								slidesToShow: 4,
-								slidesToScroll: 1,
-								responsive: [
-								{
-									breakpoint: 991,
-									settings: {
-										slidesToShow: 2,
-										slidesToScroll: 2,
-										prevArrow: '<button class="prev arrow"></button>',
-										nextArrow: '<button class="next arrow"></button>',
-									}
-								},
-								{
-									breakpoint: 767,
-									settings: {
-										slidesToShow: 1,
-										slidesToScroll: 1,
-										prevArrow: '<button class="prev arrow"></button>',
-										nextArrow: '<button class="next arrow"></button>'
-									}
-								}
-								]
-							});
-						});
-					</script>
+					<script src="js/main.js"></script>
 
 				</body>
 				</html>
