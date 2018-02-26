@@ -1,0 +1,174 @@
+/* Colors */
+@color-header: #0bbaf0;
+@color-border: #cbcdce;
+@color-white: #fff;
+@color-text: #535353;
+
+html {
+	font-size: 10px;
+}
+
+body {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+.main {
+	background: url('../img/bg.jpg') center center no-repeat;
+	min-height: 74rem;
+}
+
+.header {
+	text-transform: uppercase;
+	text-align: center;
+
+	color: @color-header;
+
+	h1 {
+		margin: 7rem 0 0 0;
+		padding: 0;
+		font-size: 4rem;
+		font-weight: bold;
+	}
+
+	p {
+		font-size: 3rem;
+		margin: 0;
+
+		&::after {
+			content: '';
+			display: block;
+			vertical-align: top;
+			width: 130px;
+			border-bottom: 1px solid @color-border;
+			margin: 1.5rem auto 3rem;
+		}
+	}
+}
+
+.questions {
+	margin: 0 auto;
+
+	.mb-0 {
+		text-align: center;
+	}
+
+	.card-body {
+		color: @color-text;
+		text-align: left;
+		font-size: 2.4rem;
+		padding: 1rem 2.5rem 3rem;
+		margin: 0 0.5rem;
+		background-color: @color-white;
+		border: 4px solid @color-border;
+		border-top: 0;
+		border-radius: 0 0 6px 6px;
+		line-height: 1.2;
+	}
+
+	.card {
+		border: none;
+		background-color: inherit;
+	}
+
+	.card-header {
+		background-color: @color-header;
+		margin-top: 0.3rem;
+		border-bottom: none;
+
+		.btn-link {
+			padding: 0;
+			text-align: center;
+			font-size: 2.5rem;
+			color: @color-white;
+
+			&:hover, &:focus {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+
+.fill {
+	&-bg {
+		position: absolute;
+		background-color: @color-header;
+		width: 100%;
+		height: 100vh;
+		border-top: 5px solid @color-border;
+
+		p {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			font-size: 18rem;
+			color: @color-white;
+			text-transform: uppercase;
+			text-align: center;
+		}
+	}
+}
+
+
+
+/* Media */
+@media (max-width: 1199px) {
+	.questions {
+		.card-header {
+			.btn-link {
+				font-size: 1.6rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 991px) {
+	.questions {
+		.card-header {
+			.btn-link {
+				font-size: 1.2rem;
+			}
+		}
+
+		.card-body {
+			font-size: 2rem;
+		}
+	}
+
+	.fill {
+		&-bg {
+			p {
+				font-size: 16rem;
+			}
+		}
+	}
+}
+
+@media (max-width: 575px) {
+	.questions {
+		.card-header {
+			.btn-link {
+				font-size: 0.85rem;
+			}
+		}
+	}
+
+	.header {
+		h1 {
+			font-size: 2.5rem;
+		}
+
+		p {
+			font-size: 1.5rem;
+		}
+	}
+
+	.fill {
+		&-bg {
+			p {
+				font-size: 10rem;
+			}
+		}
+	}
+}
