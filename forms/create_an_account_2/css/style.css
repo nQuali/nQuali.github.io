@@ -1,0 +1,119 @@
+body {
+  font-family: 'Myriad Pro', sans-serif;
+  font-size: 10px;
+  background: #000000 url(../img/bg.png) 0 0 repeat;
+}
+.form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+}
+.form a {
+  text-decoration: none;
+}
+.form form {
+  display: inline-block;
+  margin: 2.5rem;
+}
+.form-input {
+  display: block;
+  background: url('../img/input_bg1.jpg') center center no-repeat;
+  background-size: cover;
+  width: 25rem;
+  height: 3.5rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin: 1.5rem 0 0 0;
+  padding-left: 1rem;
+}
+.form-input::-webkit-input-placeholder {
+  color: #ffffff;
+}
+.form-input:-ms-input-placeholder {
+  color: #ffffff;
+}
+.form-input::-ms-input-placeholder {
+  color: #ffffff;
+}
+.form-input::placeholder {
+  color: #ffffff;
+}
+.form .checkbox {
+  margin: 2.5rem 0 0 1rem;
+}
+.form .remember {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #6f6d6d;
+}
+.form .forgot {
+  display: inline-block;
+  margin: 0.8rem 0 0 1rem;
+  font-size: 0.8rem;
+  color: #c51f03;
+}
+.form-bg {
+  width: 33rem;
+  height: 20.5rem;
+  background-color: #000000;
+  border-radius: 6px;
+  border: 1px solid #84d3ed;
+}
+.form-bg-out {
+  position: absolute;
+  top: -1.2rem;
+  left: -1.28rem;
+  width: 35.8rem;
+  height: 23rem;
+  background-color: #0498c5;
+  border-radius: 6px;
+  border-top: 1px solid #84d3ed;
+  -webkit-box-shadow: 0px -1px 0px 0px #047ca0;
+          box-shadow: 0px -1px 0px 0px #047ca0;
+  z-index: -1;
+}
+.form .enter {
+  position: absolute;
+  top: -3.4rem;
+  left: 0.4rem;
+  width: 5.8rem;
+  height: 2.5rem;
+  background-color: #0498c5;
+  border-radius: 6px;
+  border-top: 1px solid #84d3ed;
+  -webkit-box-shadow: 0px -1px 0px 0px #047ca0;
+          box-shadow: 0px -1px 0px 0px #047ca0;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #ffffff;
+  text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.8);
+}
+.form .sign-in {
+  position: absolute;
+  top: 17.65rem;
+  left: 28rem;
+  width: 7.2rem;
+  height: 2.2rem;
+  background: -webkit-gradient(linear, left top, right top, from(#800501), color-stop(51%, #e73827), to(#800501));
+  background: linear-gradient(to right, #800501 0%, #e73827 51%, #800501 100%);
+  text-align: center;
+  font-size: 1.4rem;
+  color: #ffffff;
+}
+.form .register {
+  position: absolute;
+  top: -3.4rem;
+  left: 6.6rem;
+  width: 8.8rem;
+  height: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 6px;
+  z-index: -1;
+  text-align: center;
+  font-size: 1.4rem;
+  color: #000000;
+}
