@@ -1,143 +1,157 @@
-'use strict';
+// @ts-check
+'use strict'
 
 function Cell(posX, posY, energy, space) {
-  var self = this;
+  var self = this
 
-  this.posX = posX;
-  this.posY = posY;
-  this.energy = energy;
-  this.space = space;
+  this.posX = posX
+  this.posY = posY
+  this.energy = energy
+  this.space = space
 
-  this.space[this.posY][this.posX] = 'Q';
+  this.space[this.posY][this.posX] = 'Q'
 
-  this.lookArr = [];
+  this.lookArr = []
+  this.lookArrCord = []
+  this.foodCord = []
   this.bestFood = 0;
 
-  this.foodCordX = 0;
-  this.foodCordY = 0;
-
-  function findBestFood() {
-    var filteredLookArr = self.lookArr.filter(function(v) {
-      return !isNaN(v);
-    });
-    if (filteredLookArr.length > 0) {
-      self.bestFood = Math.max.apply(0, filteredLookArr);
-    } else {
-      self.bestFood = 0;
-    }
-  }
-
-  function getBestFoodCord() {
-    var indexOfBestFood = self.lookArr.indexOf(self.bestFood.toString());
+  // Старая функция получния координаты лучшей еды
+  function __OLD__getBestFoodCord() {
+    var indexOfBestFood = self.lookArr.indexOf(self.bestFood.toString())
 
     switch (indexOfBestFood) {
       case 0:
-        self.foodCordX = self.posX - 1;
-        self.foodCordY = self.posY - 1;
-        break;
+        self.foodCordX = self.posX - 1
+        self.foodCordY = self.posY - 1
+        break
       case 1:
-        self.foodCordX = self.posX;
-        self.foodCordY = self.posY - 1;
-        break;
+        self.foodCordX = self.posX
+        self.foodCordY = self.posY - 1
+        break
       case 2:
-        self.foodCordX = self.posX + 1;
-        self.foodCordY = self.posY - 1;
-        break;
+        self.foodCordX = self.posX + 1
+        self.foodCordY = self.posY - 1
+        break
       case 3:
-        self.foodCordX = self.posX - 1;
-        self.foodCordY = self.posY;
-        break;
+        self.foodCordX = self.posX - 1
+        self.foodCordY = self.posY
+        break
       case 4:
-        self.foodCordX = self.posX + 1;
-        self.foodCordY = self.posY;
-        break;
+        self.foodCordX = self.posX + 1
+        self.foodCordY = self.posY
+        break
       case 5:
-        self.foodCordX = self.posX - 1;
-        self.foodCordY = self.posY + 1;
-        break;
+        self.foodCordX = self.posX - 1
+        self.foodCordY = self.posY + 1
+        break
       case 6:
-        self.foodCordX = self.posX;
-        self.foodCordY = self.posY + 1;
-        break;
+        self.foodCordX = self.posX
+        self.foodCordY = self.posY + 1
+        break
       case 7:
-        self.foodCordX = self.posX + 1;
-        self.foodCordY = self.posY + 1;
-        break;
+        self.foodCordX = self.posX + 1
+        self.foodCordY = self.posY + 1
+        break
       case -1:
 
-        switch (parseInt(Math.random() * 4)) {
+        switch (Math.floor(Math.random() * 4)) {
           case 0:
-            self.foodCordX = self.posX + Math.round(Math.random());
-            self.foodCordY = self.posY + Math.round(Math.random());
-            break;
+            self.foodCordX = self.posX + Math.round(Math.random())
+            self.foodCordY = self.posY + Math.round(Math.random())
+            break
           case 1:
-            self.foodCordX = self.posX - Math.round(Math.random());
-            self.foodCordY = self.posY - Math.round(Math.random());
-            break;
+            self.foodCordX = self.posX - Math.round(Math.random())
+            self.foodCordY = self.posY - Math.round(Math.random())
+            break
           case 2:
-            self.foodCordX = self.posX + Math.round(Math.random());
-            self.foodCordY = self.posY - Math.round(Math.random());
-            break;
+            self.foodCordX = self.posX + Math.round(Math.random())
+            self.foodCordY = self.posY - Math.round(Math.random())
+            break
           case 3:
-            self.foodCordX = self.posX - Math.round(Math.random());
-            self.foodCordY = self.posY + Math.round(Math.random());
-            break;
+            self.foodCordX = self.posX - Math.round(Math.random())
+            self.foodCordY = self.posY + Math.round(Math.random())
+            break
         }
     }
   }
 
+  // Сканирует область в радиусе одной клетки
   function look() {
-    self.lookArr.push(self.space[self.posY - 1][self.posX - 1]);
-    self.lookArr.push(self.space[self.posY - 1][self.posX]);
-    self.lookArr.push(self.space[self.posY - 1][self.posX + 1]);
-
-    self.lookArr.push(self.space[self.posY][self.posX - 1]);
-    self.lookArr.push(self.space[self.posY][self.posX + 1]);
-
-    self.lookArr.push(self.space[self.posY + 1][self.posX - 1]);
-    self.lookArr.push(self.space[self.posY + 1][self.posX]);
-    self.lookArr.push(self.space[self.posY + 1][self.posX + 1]);
+    self.lookArrCord = [
+      [self.posY - 1, self.posX - 1],
+      [self.posY - 1, self.posX],
+      [self.posY - 1, self.posX + 1],
+      [self.posY, self.posX - 1],
+      [self.posY, self.posX + 1],
+      [self.posY + 1, self.posX - 1],
+      [self.posY + 1, self.posX],
+      [self.posY + 1, self.posX + 1]
+    ]
   }
 
-  this.console = function() {
-    console.log('Поле: ', self.space);
-    console.log('Массив сканирования: ', self.lookArr);
-    console.log('Лучшая еда: ', self.bestFood);
-    console.log('Енергия: ', self.energy);
+  // Опеделяет, что находится в радиусе сканирования
+  function findItems() {
+    var filteredLookArrCord = self.lookArrCord.filter(e => e.every(e => e >= 0));
 
-    console.log('Идекс лучшей еды в массиве сканирования: ',
-        self.lookArr.indexOf(self.bestFood.toString()));
+    for (let i = 0; i < filteredLookArrCord.length; i++) {
+      self.lookArr.push(space[filteredLookArrCord[i][0]][filteredLookArrCord[i][1]])
+    }
+  }
 
-    console.log('Координаты лучшей еды: [', self.foodCordX, ', ',
-        self.foodCordY, ']');
-  };
+  // Находит наибольшую еду и кладет ее в переменную self.bestFood
+  function findbestFood() {
+    self.bestFood = Math.max.apply(0, self.lookArr.filter(e => +e))
+  }
 
+  // Находит координату еды
+  function findBestFoodCord() {
+    self.foodCord = self.lookArrCord[self.lookArr.indexOf(self.bestFood + '')]
+  }
+
+  // Передвигает клетку к еде, изменяет текущие координаты, добавляет энергию
   function move() {
-    self.space[self.posY][self.posX] = '-';
-    self.space[self.foodCordY][self.foodCordX] = 'Q';
+    self.space[self.posY][self.posX] = '-'
+    self.space[self.foodCord[0]][self.foodCord[1]] = 'Q'
 
-    self.posY = self.foodCordY;
-    self.posX = self.foodCordX;
+    self.posY = self.foodCord[0]
+    self.posX = self.foodCord[1]
 
-    self.energy += self.bestFood;
-    self.lookArr = [];
+    self.energy += self.bestFood
+  }
+
+  // Снижает энергию и проверяет не закончилась ли она
+  function checkDeath() {
+    self.energy -= 1 // Снижение енергии на 1 за ход
+    if (self.energy === 0) self.energy = "DEAD"
+  }
+
+  // Очищает переменные
+  function clearInfo() {
+    self.lookArr = []
+    self.lookArrCord = []
+    self.foodCord = []
     self.bestFood = 0;
-    self.foodCordX = 0;
-    self.foodCordY = 0;
   }
 
-  function checkAlive() {
-    self.energy -= 1;  // Снижение енергии на 1 за ход
-    if (self.energy === 0) self.energy = "DEAD";
+  // Выводит данные в консоль
+  this.console = function () {
+    console.log('Поле: ', self.space)
+    console.log('Массив сканирования: ', self.lookArr)
+    console.log('Координаты лучшей еды: ', self.foodCord)
+    console.log('Текущая энергия: ', self.energy)
   }
 
-  this.live = function() {
-    look();            // Сканирует область в радиусе одной клетки
-    findBestFood();    // Находит лучшую еду и записывает в переменную self.bestFood
-    getBestFoodCord(); // Записывает координаты еда self.foodCordX и self.foodCordX
-    move();            // Передвигает клетку
-    checkAlive();
-  };
+  // Запускаяет 1 жизненный круг
+  this.live = function () {
+    look()
+    findItems()
+    findbestFood()
+    findBestFoodCord()
+    move()
+    checkDeath()
+    clearInfo()
+  }
 }
 
 /*
@@ -151,7 +165,7 @@ function Cell(posX, posY, energy, space) {
      [ '-', '3', '-', '1', '-', '-', 'X', '-', '-', '-' ],
      [ '-', '-', 'X', '-', 'Q', '-', 'X', '-', '2', '-' ],
      [ '-', '4', 'X', '-', '-', '4', '-', '-', '-', '-' ],
-     [ '4', '-', 'X', '4', '-', '-', '-', '3', '-', '1' ] ];
+     [ '4', '-', 'X', '4', '-', '-', '-', '3', '-', '1' ] ]
 
 */
 
@@ -160,45 +174,48 @@ var firstSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']];
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+]
 
 var secondSpace = [
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-', '-', '4', '-', '-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '3', '-', '-', '-', '-', '1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']];
-	
-var thirdSpace = [
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '3', '1', '-', '3', '2', '-', '3', '-', '-', '-', '-', '3', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-', '-', '4', '-', '-', '3', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '2', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '-'],
-    ['-', '-', '2', '-', '-', '-', '-', '4', '-', '-', '-', '3', '-', '-', '-', '-', '1', '-'],
-    ['-', '-', '-', '-', '2', '-', '-', '-', '-', '4', '2', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '1', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-'],
-    ['-', '-', '1', '-', '-', '-', '4', '-', '-', '-', '4', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '3', '-', '-', '-', '3', '-', '-', '-', '-', '4', '-', '3', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '4', '-', '-', '4', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-    ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']];
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-', '-', '4', '-', '-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '3', '-', '-', '-', '-', '1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+]
 
-var cell = new Cell(8, 6, 1, thirdSpace);
-cell.console();
+var thirdSpace = [
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '3', '1', '-', '3', '2', '-', '3', '-', '-', '-', '-', '3', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-', '-', '4', '-', '-', '3', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '2', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '-'],
+  ['-', '-', '2', '-', '-', '-', '-', '4', '-', '-', '-', '3', '-', '-', '-', '-', '1', '-'],
+  ['-', '-', '-', '-', '2', '-', '-', '-', '-', '4', '2', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '4', '-', '-', '1', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2', '-'],
+  ['-', '-', '1', '-', '-', '-', '4', '-', '-', '-', '4', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '3', '-', '-', '-', '3', '-', '-', '-', '-', '4', '-', '3', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '4', '-', '-', '4', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+]
+
+var cell = new Cell(8, 6, 1, thirdSpace)
+cell.console()

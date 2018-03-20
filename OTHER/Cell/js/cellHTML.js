@@ -1,11 +1,12 @@
+// @ts-check
 'use strict';
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
 
   var space = document.querySelector('.space');
 
   var btnNextStep = document.querySelector('.panel').
-      appendChild(document.createElement('button'));
+  appendChild(document.createElement('button'));
   btnNextStep.className = 'btnNextStep';
   btnNextStep.innerText = 'NEXT';
 
@@ -30,12 +31,20 @@ window.addEventListener('load', function() {
     }
   }
 
+  //function clearSpace() {
+  //  for (var i = 0; i < cell.space.length; i++) {
+  //    var rowCell = document.querySelector('.rowCell');
+  //    space.removeChild(rowCell);
+  //  }
+  //}
+  
   function clearSpace() {
-    for (var i = 0; i < cell.space.length; i++) {
-      var rowCell = document.querySelector('.rowCell');
-      space.removeChild(rowCell);
-    }
-  }
+	var z, node = space;
+	while(z = node.lastChild){
+		node.removeChild(z);
+	}
+   }
+
 
   function stopLive() {
     if (cell.energy === 'DEAD')
