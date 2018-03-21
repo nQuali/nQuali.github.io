@@ -1,112 +1,80 @@
 // @ts-check
 'use strict'
 
-function Cell(posX, posY, energy, space) {
+// Сделать рандомизацию шагов (если не попадает в радиус сканирования)
+// Увеличить радиус сканирования (должен задаваься при создании клетки)
+// Добавить препятсятвия
+// Научить обходить препятствия
+// Научить ходить по кратчайшему пути к еде
+// Научить выбирать лучшую еду в зависимости от расстояния
+// Сделать генератор еды на карте
+
+function Cell(posX, posY, energy, scanRad, space) {
   var self = this
 
   this.posX = posX
   this.posY = posY
   this.energy = energy
   this.space = space
+  this.scanRad = scanRad
 
   this.space[this.posY][this.posX] = 'Q'
 
-  this.lookArr = []
+  this.lookArrItems = []
   this.lookArrCord = []
+  this.filteredLookArrCord = []
   this.foodCord = []
-  this.bestFood = 0;
+  this.bestFood = 0
 
-  // Старая функция получния координаты лучшей еды
-  function __OLD__getBestFoodCord() {
-    var indexOfBestFood = self.lookArr.indexOf(self.bestFood.toString())
-
-    switch (indexOfBestFood) {
-      case 0:
-        self.foodCordX = self.posX - 1
-        self.foodCordY = self.posY - 1
-        break
-      case 1:
-        self.foodCordX = self.posX
-        self.foodCordY = self.posY - 1
-        break
-      case 2:
-        self.foodCordX = self.posX + 1
-        self.foodCordY = self.posY - 1
-        break
-      case 3:
-        self.foodCordX = self.posX - 1
-        self.foodCordY = self.posY
-        break
-      case 4:
-        self.foodCordX = self.posX + 1
-        self.foodCordY = self.posY
-        break
-      case 5:
-        self.foodCordX = self.posX - 1
-        self.foodCordY = self.posY + 1
-        break
-      case 6:
-        self.foodCordX = self.posX
-        self.foodCordY = self.posY + 1
-        break
-      case 7:
-        self.foodCordX = self.posX + 1
-        self.foodCordY = self.posY + 1
-        break
-      case -1:
-
-        switch (Math.floor(Math.random() * 4)) {
-          case 0:
-            self.foodCordX = self.posX + Math.round(Math.random())
-            self.foodCordY = self.posY + Math.round(Math.random())
-            break
-          case 1:
-            self.foodCordX = self.posX - Math.round(Math.random())
-            self.foodCordY = self.posY - Math.round(Math.random())
-            break
-          case 2:
-            self.foodCordX = self.posX + Math.round(Math.random())
-            self.foodCordY = self.posY - Math.round(Math.random())
-            break
-          case 3:
-            self.foodCordX = self.posX - Math.round(Math.random())
-            self.foodCordY = self.posY + Math.round(Math.random())
-            break
-        }
-    }
-  }
-
-  // Сканирует область в радиусе одной клетки
+  // Сканирует область в заданом радиусе одной клетки
   function look() {
-    self.lookArrCord = [
-      [self.posY - 1, self.posX - 1],
-      [self.posY - 1, self.posX],
-      [self.posY - 1, self.posX + 1],
-      [self.posY, self.posX - 1],
-      [self.posY, self.posX + 1],
-      [self.posY + 1, self.posX - 1],
-      [self.posY + 1, self.posX],
-      [self.posY + 1, self.posX + 1]
-    ]
+    for (let i = -self.scanRad; i < self.scanRad + 1; i++) {
+      for (let j = -self.scanRad; j < self.scanRad + 1; j++) {
+        if (i == 0 && j == 0) continue
+        self.lookArrCord.push([self.posY + i, self.posX + j])
+      }
+    }
+
+    console.log('lookArrCord', self.lookArrCord)
   }
 
   // Опеделяет, что находится в радиусе сканирования
   function findItems() {
-    var filteredLookArrCord = self.lookArrCord.filter(e => e.every(e => e >= 0));
+    var halffilteredlookArrCord = self.lookArrCord.filter(e => e.every(e => e >= 0))
 
-    for (let i = 0; i < filteredLookArrCord.length; i++) {
-      self.lookArr.push(space[filteredLookArrCord[i][0]][filteredLookArrCord[i][1]])
+    console.log('tmpfilteredlookArrCord', halffilteredlookArrCord)
+
+    for (let i = 0; i < halffilteredlookArrCord.length; i++) {
+      if (self.lookArrCord[i][0] < space.length && self.lookArrCord[i][1] < space[0].length) {
+        self.filteredLookArrCord.push(halffilteredlookArrCord[i])
+      }
     }
+
+    console.log('filteredLookArrCord', self.filteredLookArrCord)
+
+    for (let i = 0; i < self.filteredLookArrCord.length; i++) {
+      self.lookArrItems.push(space[self.filteredLookArrCord[i][0]][self.filteredLookArrCord[i][1]])
+    }
+
+    console.log('self.lookArrItems', self.lookArrItems)
   }
 
   // Находит наибольшую еду и кладет ее в переменную self.bestFood
   function findbestFood() {
-    self.bestFood = Math.max.apply(0, self.lookArr.filter(e => +e))
+    self.bestFood = Math.max.apply(0, self.lookArrItems.filter(e => +e))
+
+    console.log('self.bestFood', self.bestFood)
   }
 
   // Находит координату еды
   function findBestFoodCord() {
-    self.foodCord = self.lookArrCord[self.lookArr.indexOf(self.bestFood + '')]
+    if (self.bestFood != -Infinity) {
+      self.foodCord = self.filteredLookArrCord[self.lookArrItems.indexOf(self.bestFood + '')]
+    } else {
+      self.foodCord = self.filteredLookArrCord[Math.floor(Math.random() * self.filteredLookArrCord.length)]
+    }
+
+    console.log('self.foodCord', self.foodCord)
   }
 
   // Передвигает клетку к еде, изменяет текущие координаты, добавляет энергию
@@ -117,7 +85,7 @@ function Cell(posX, posY, energy, space) {
     self.posY = self.foodCord[0]
     self.posX = self.foodCord[1]
 
-    self.energy += self.bestFood
+    self.energy += self.bestFood == -Infinity ? 0 : self.bestFood
   }
 
   // Снижает энергию и проверяет не закончилась ли она
@@ -128,16 +96,18 @@ function Cell(posX, posY, energy, space) {
 
   // Очищает переменные
   function clearInfo() {
-    self.lookArr = []
+    self.lookArrItems = []
     self.lookArrCord = []
+    self.filteredLookArrCord = []
     self.foodCord = []
-    self.bestFood = 0;
+    self.bestFood = 0
   }
 
   // Выводит данные в консоль
   this.console = function () {
     console.log('Поле: ', self.space)
-    console.log('Массив сканирования: ', self.lookArr)
+    console.log('Массив координат сканирования: ', self.lookArrCord)
+    console.log('Массив элементов сканирования: ', self.lookArrItems)
     console.log('Координаты лучшей еды: ', self.foodCord)
     console.log('Текущая энергия: ', self.energy)
   }
@@ -217,5 +187,5 @@ var thirdSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
 ]
 
-var cell = new Cell(8, 6, 1, thirdSpace)
+var cell = new Cell(17, 16, 10, 3, thirdSpace)
 cell.console()

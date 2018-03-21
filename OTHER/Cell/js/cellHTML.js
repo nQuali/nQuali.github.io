@@ -37,13 +37,13 @@ window.addEventListener('load', function () {
   //    space.removeChild(rowCell);
   //  }
   //}
-  
+
   function clearSpace() {
-	var z, node = space;
-	while(z = node.lastChild){
-		node.removeChild(z);
-	}
-   }
+    var z, node = space;
+    while (z = node.lastChild) {
+      node.removeChild(z);
+    }
+  }
 
 
   function stopLive() {
@@ -53,7 +53,7 @@ window.addEventListener('load', function () {
 
   function moveListener() {
     cell.live();
-    cell.console();
+    // cell.console();
     clearSpace();
     drawSpace();
     energyBar.innerText = cell.energy;
