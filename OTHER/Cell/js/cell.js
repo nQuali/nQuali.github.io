@@ -10,7 +10,7 @@
 // Сделать генератор еды на карте
 
 function Cell(posX, posY, energy, scanRad, space) {
-  var self = this
+  const self = this
 
   this.posX = posX
   this.posY = posY
@@ -35,14 +35,14 @@ function Cell(posX, posY, energy, scanRad, space) {
       }
     }
 
-    console.log('lookArrCord', self.lookArrCord)
+    //console.log('lookArrCord', self.lookArrCord)
   }
 
   // Опеделяет, что находится в радиусе сканирования
   function findItems() {
-    var halffilteredlookArrCord = self.lookArrCord.filter(e => e.every(e => e >= 0))
+    let halffilteredlookArrCord = self.lookArrCord.filter(e => e.every(e => e >= 0))
 
-    console.log('tmpfilteredlookArrCord', halffilteredlookArrCord)
+    //console.log('tmpfilteredlookArrCord', halffilteredlookArrCord)
 
     for (let i = 0; i < halffilteredlookArrCord.length; i++) {
       if (self.lookArrCord[i][0] < space.length && self.lookArrCord[i][1] < space[0].length) {
@@ -50,20 +50,20 @@ function Cell(posX, posY, energy, scanRad, space) {
       }
     }
 
-    console.log('filteredLookArrCord', self.filteredLookArrCord)
+    //console.log('filteredLookArrCord', self.filteredLookArrCord)
 
     for (let i = 0; i < self.filteredLookArrCord.length; i++) {
       self.lookArrItems.push(space[self.filteredLookArrCord[i][0]][self.filteredLookArrCord[i][1]])
     }
 
-    console.log('self.lookArrItems', self.lookArrItems)
+    //console.log('self.lookArrItems', self.lookArrItems)
   }
 
   // Находит наибольшую еду и кладет ее в переменную self.bestFood
   function findbestFood() {
     self.bestFood = Math.max.apply(0, self.lookArrItems.filter(e => +e))
 
-    console.log('self.bestFood', self.bestFood)
+    //console.log('self.bestFood', self.bestFood)
   }
 
   // Находит координату еды
@@ -74,7 +74,7 @@ function Cell(posX, posY, energy, scanRad, space) {
       self.foodCord = self.filteredLookArrCord[Math.floor(Math.random() * self.filteredLookArrCord.length)]
     }
 
-    console.log('self.foodCord', self.foodCord)
+    //console.log('self.foodCord', self.foodCord)
   }
 
   // Передвигает клетку к еде, изменяет текущие координаты, добавляет энергию
@@ -105,6 +105,7 @@ function Cell(posX, posY, energy, scanRad, space) {
 
   // Выводит данные в консоль
   this.console = function () {
+    console.clear()
     console.log('Поле: ', self.space)
     console.log('Массив координат сканирования: ', self.lookArrCord)
     console.log('Массив элементов сканирования: ', self.lookArrItems)
@@ -119,7 +120,8 @@ function Cell(posX, posY, energy, scanRad, space) {
     findbestFood()
     findBestFoodCord()
     move()
-    checkDeath()
+		checkDeath()
+		this.console()
     clearInfo()
   }
 }
@@ -139,7 +141,7 @@ function Cell(posX, posY, energy, scanRad, space) {
 
 */
 
-var firstSpace = [
+let firstSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -147,7 +149,7 @@ var firstSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
 ]
 
-var secondSpace = [
+let secondSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -167,7 +169,7 @@ var secondSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
 ]
 
-var thirdSpace = [
+let thirdSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
@@ -187,5 +189,4 @@ var thirdSpace = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
 ]
 
-var cell = new Cell(17, 16, 10, 3, thirdSpace)
-cell.console()
+let cell = new Cell(17, 16, 10, 3, thirdSpace)

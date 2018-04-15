@@ -53,6 +53,7 @@ window.addEventListener('load', function () {
 
   function moveListener() {
     cell.live();
+    // cell.console();
     clearSpace();
     drawSpace();
     energyBar.innerText = cell.energy;
