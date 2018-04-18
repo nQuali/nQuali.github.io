@@ -1,7 +1,8 @@
 window.addEventListener('load', () => {
 
   let field = document.querySelector('.field')
-
+  let status = document.querySelector('.status')
+	
   function clearSpace() {
     let z, node = field;
     while (z = node.lastChild) {
@@ -24,29 +25,30 @@ window.addEventListener('load', () => {
     }
   }
 
+  function game_draw_and_check() {
+    clearSpace()
+    drawSpace()
+  }
+
   window.onkeydown = (e) => {
     if (e.keyCode == 37) { // left
       left()
-      clearSpace()
-      drawSpace()
+      game_draw_and_check()
     }
 
     if (e.keyCode == 38) { // up
       up()
-      clearSpace()
-      drawSpace()
+      game_draw_and_check()
     }
 
     if (e.keyCode == 39) { // right
       right()
-      clearSpace()
-      drawSpace()
+      game_draw_and_check()
     }
 
     if (e.keyCode == 40) { // down
-			down()
-      clearSpace()
-      drawSpace()
+      down()
+      game_draw_and_check()
     }
   }
 
